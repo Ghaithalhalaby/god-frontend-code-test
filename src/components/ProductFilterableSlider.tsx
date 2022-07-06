@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import { useFetch } from '../custom-hooks/useFetch'
 import { TabNav, TabNavItem, Spinner, Text, View } from 'vcc-ui'
 import { ProductSlider } from './ProductSlider'
-import { Car } from './CarCard'
-import cars from '../../public/api/cars.json'
+import { Car } from '../utils/types'
 
 export const ProductFilterableSlider: React.FC = () => {
   const [carsList, setCarsList] = useState<Car[]>([])
@@ -15,8 +14,9 @@ export const ProductFilterableSlider: React.FC = () => {
   const { isLoading, fetchError, fetchErrorMsg, data } = useFetch('/api/cars')
 
   useEffect(() => {
-    getCars()
-  }, [])
+    if (fetchError) return
+    setCarsList(data)
+  }, [data])
 
   useEffect(() => {
     setBodyTypes(getBodyTypes(carsList))
@@ -26,13 +26,6 @@ export const ProductFilterableSlider: React.FC = () => {
   useEffect(() => {
     filterCars()
   }, [setectedBodyType])
-
-  /**
-   * Fetch and update the car list.
-   */
-  const getCars = async () => {
-    setCarsList(cars)
-  }
 
   /**
    * Extract available car body types from a given car list.

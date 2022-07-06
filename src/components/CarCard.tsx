@@ -1,14 +1,11 @@
 import { View, Text, useTheme, Link, Spacer } from 'vcc-ui'
+import { Car } from '../utils/types'
 
-export interface Car {
-  id?: string
-  bodyType: string
-  modelName: string
-  modelType: string
-  imageUrl: string
+interface Props extends Car {
+  cardIndex?: number
 }
 
-export const CarCard: React.FC<Car> = ({
+export const CarCard: React.FC<Props> = ({
   bodyType,
   modelName,
   modelType,

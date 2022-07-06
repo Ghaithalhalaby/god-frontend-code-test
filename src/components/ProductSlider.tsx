@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { View, useTheme, Icon, Click } from 'vcc-ui'
-import { CarCard, Car } from './CarCard'
+import { CarCard } from './CarCard'
+import { Car } from '../utils/types'
 import { DotPositionIndicator } from './DotPositionIndicator'
 
 interface Props {
