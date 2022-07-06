@@ -1,16 +1,18 @@
-import React from 'react'
-import { StyleProvider, ThemePicker } from 'vcc-ui'
-import { ProductFilterableSlider } from '../src/components/ProductFilterableSlider'
 import '../public/css/styles.css'
+import React from 'react'
+import type { AppProps } from 'next/app'
+import { StyleProvider, ThemePicker } from 'vcc-ui'
 
-function HomePage() {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <StyleProvider>
-      <ThemePicker variant="light">
-        <ProductFilterableSlider />
-      </ThemePicker>
-    </StyleProvider>
+    <React.StrictMode>
+      <StyleProvider>
+        <ThemePicker variant="light">
+          <Component {...pageProps} />
+        </ThemePicker>
+      </StyleProvider>
+    </React.StrictMode>
   )
 }
 
-export default HomePage
+export default MyApp

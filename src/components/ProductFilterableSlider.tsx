@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { TabNav, TabNavItem } from 'vcc-ui'
+import { useFetch } from '../custom-hooks/useFetch'
+import { TabNav, TabNavItem, Spinner, Text, View } from 'vcc-ui'
 import { ProductSlider } from './ProductSlider'
 import { Car } from './CarCard'
 import cars from '../../public/api/cars.json'
@@ -9,6 +10,9 @@ export const ProductFilterableSlider: React.FC = () => {
   const [filtieredCarsList, setFiltieredCarsList] = useState<Car[]>([])
   const [setectedBodyType, setSetectedBodyType] = useState('all')
   const [bodyTypes, setBodyTypes] = useState<string[]>([])
+
+  // Use custom fetch hook to get cars list.
+  const { isLoading, fetchError, fetchErrorMsg, data } = useFetch('/api/cars')
 
   useEffect(() => {
     getCars()
@@ -57,6 +61,29 @@ export const ProductFilterableSlider: React.FC = () => {
       (car) => car.bodyType === setectedBodyType
     )
     setFiltieredCarsList(filtieredList)
+  }
+
+  // When the data is fetching, show a loading indicator.
+  if (isLoading) {
+    return (
+      <View
+        width="100%"
+        minHeight={400}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Spinner size={40} />
+      </View>
+    )
+  }
+
+  // Inform the user if the is an error.
+  if (fetchError) {
+    return (
+      <View width="100%" justifyContent="center" alignItems="center">
+        <Text>{fetchErrorMsg}</Text>
+      </View>
+    )
   }
 
   return (
