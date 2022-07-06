@@ -1,0 +1,67 @@
+import { View, Text, useTheme, Link, Spacer } from 'vcc-ui'
+
+export interface Car {
+  id?: string
+  bodyType: string
+  modelName: string
+  modelType: string
+  imageUrl: string
+}
+
+export const CarCard: React.FC<Car> = ({
+  bodyType,
+  modelName,
+  modelType,
+  imageUrl,
+}) => {
+  const theme = useTheme()
+
+  return (
+    <View
+      padding={1}
+      extend={{
+        //backgroundColor: theme.color.ornament.divider,
+        flexBasis: '25%',
+        untilM: {
+          flexBasis: '75%',
+        },
+      }}
+    >
+      <Text
+        variant="kelly"
+        subStyle="emphasis"
+        extend={{
+          color: theme.color.foreground.secondary,
+          textTransform: 'uppercase',
+        }}
+      >
+        {bodyType}
+      </Text>
+      <View direction="row" spacing={1} wrap="wrap" marginBottom={1}>
+        <Text
+          variant={'amundsen'}
+          as={'h2'}
+          extend={{ color: theme.color.foreground.primary }}
+        >
+          {modelName}
+        </Text>
+        <Text
+          variant={'columbus'}
+          extend={{ color: theme.color.foreground.secondary }}
+        >
+          {modelType}
+        </Text>
+      </View>
+      <img src={imageUrl} width="100%" height="auto" />
+      <View direction="row" justifyContent="center">
+        <Link href="https://www.volvocars.com/" arrow="right">
+          learn
+        </Link>
+        <Spacer />
+        <Link href="https://www.volvocars.com/" arrow="right">
+          SHOP
+        </Link>
+      </View>
+    </View>
+  )
+}

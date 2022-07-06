@@ -1,13 +1,16 @@
-import { HelloWorld } from "../src/components/HelloWorld";
-import "../public/css/styles.css";
-import React from "react";
+import React from 'react'
+import { StyleProvider, ThemePicker } from 'vcc-ui'
+import { ProductFilterableSlider } from '../src/components/ProductFilterableSlider'
+import '../public/css/styles.css'
 
 function HomePage() {
   return (
-    <React.StrictMode>
-      <HelloWorld />
-    </React.StrictMode>
-  );
+    <StyleProvider>
+      <ThemePicker variant="light">
+        <ProductFilterableSlider />
+      </ThemePicker>
+    </StyleProvider>
+  )
 }
 
-export default HomePage;
+export default HomePage
