@@ -6,6 +6,7 @@ import cars from '../../public/api/cars.json'
 
 export const ProductFilterableSlider: React.FC = () => {
   const [carsList, setCarsList] = useState<Car[]>([])
+  const [filtieredCarsList, setFiltieredCarsList] = useState<Car[]>([])
   const [setectedBodyType, setSetectedBodyType] = useState('all')
   const [bodyTypes, setBodyTypes] = useState<string[]>([])
 
@@ -15,7 +16,19 @@ export const ProductFilterableSlider: React.FC = () => {
 
   useEffect(() => {
     setBodyTypes(getBodyTypes(carsList))
+    filterCars()
   }, [carsList])
+
+  useEffect(() => {
+    filterCars()
+  }, [setectedBodyType])
+
+  /**
+   * Fetch and update the car list.
+   */
+  const getCars = async () => {
+    setCarsList(cars)
+  }
 
   /**
    * Extract available car body types from a given car list.
@@ -33,10 +46,17 @@ export const ProductFilterableSlider: React.FC = () => {
   }
 
   /**
-   * Fetch and update the car list.
+   * Filters and update the cars list by chosen category (body type).
    */
-  const getCars = async () => {
-    setCarsList(cars)
+  const filterCars = () => {
+    if (setectedBodyType === 'all') {
+      setFiltieredCarsList(carsList)
+      return
+    }
+    const filtieredList = carsList.filter(
+      (car) => car.bodyType === setectedBodyType
+    )
+    setFiltieredCarsList(filtieredList)
   }
 
   return (
@@ -63,7 +83,7 @@ export const ProductFilterableSlider: React.FC = () => {
           </TabNavItem>
         ))}
       </TabNav>
-      <ProductSlider carsList={carsList} />
+      <ProductSlider carsList={filtieredCarsList} />
     </section>
   )
 }
