@@ -183,13 +183,14 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
           '::-webkit-scrollbar': { display: 'none' },
         }}
       >
-        {carsList?.map((car) => (
+        {carsList?.map((car, i) => (
           <CarCard
             bodyType={car.bodyType}
             modelName={car.modelName}
             modelType={car.modelType}
             imageUrl={car.imageUrl}
             key={car.id}
+            cardIndex={i}
           />
         ))}
       </View>

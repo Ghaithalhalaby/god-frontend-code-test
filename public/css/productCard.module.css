@@ -1,0 +1,17 @@
+.fadein {
+  animation-name: fadein;
+  animation-duration: 0.4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+}
+
+@keyframes fadein {
+  from {
+    transform: translateX(25px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}

@@ -1,3 +1,4 @@
+import styles from '../../public/css/productCard.module.css'
 import { View, Text, useTheme, Link, Spacer } from 'vcc-ui'
 import { Car } from '../utils/types'
 
@@ -10,12 +11,16 @@ export const CarCard: React.FC<Props> = ({
   modelName,
   modelType,
   imageUrl,
+  cardIndex = 0,
 }) => {
   const theme = useTheme()
 
   return (
     <View
-      padding={1}
+      paddingLeft={1}
+      paddingRight={1}
+      as="li"
+      className={styles.fadein}
       extend={{
         flexBasis: '25%',
         untilM: {
@@ -24,6 +29,7 @@ export const CarCard: React.FC<Props> = ({
         untilL: {
           flexBasis: '33.33%',
         },
+        animationDelay: `${cardIndex * 100}ms`,
       }}
     >
       <Text
