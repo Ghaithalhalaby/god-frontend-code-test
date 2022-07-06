@@ -81,7 +81,7 @@ export const ProductFilterableSlider: React.FC = () => {
 
   return (
     <section>
-      <TabNav enableLineTransition aria-label="Filter car list">
+      <TabNav aria-label="Filter list">
         <TabNavItem
           isActive={setectedBodyType === 'all'}
           onClick={() => {

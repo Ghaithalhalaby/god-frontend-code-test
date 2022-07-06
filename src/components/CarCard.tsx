@@ -45,7 +45,7 @@ export const CarCard: React.FC<Props> = ({
       <View direction="row" spacing={1} wrap="wrap" marginBottom={1}>
         <Text
           variant={'amundsen'}
-          as={'h2'}
+          as={'h3'}
           extend={{ color: theme.color.foreground.primary }}
         >
           {modelName}
@@ -57,13 +57,28 @@ export const CarCard: React.FC<Props> = ({
           {modelType}
         </Text>
       </View>
-      <img src={imageUrl} width="100%" height="auto" />
-      <View direction="row" justifyContent="center">
-        <Link href="https://www.volvocars.com/" arrow="right">
+
+      <img
+        src={imageUrl}
+        width="100%"
+        height="auto"
+        alt={`${modelName}${modelType}`}
+      />
+
+      <View direction="row" justifyContent="center" marginTop={1}>
+        <Link
+          href="#"
+          arrow="right"
+          aria-label={`Learn more about ${modelName}${modelType}`}
+        >
           learn
         </Link>
         <Spacer />
-        <Link href="https://www.volvocars.com/" arrow="right">
+        <Link
+          href="#"
+          arrow="right"
+          aria-label={`Buy ${modelName}${modelType}`}
+        >
           SHOP
         </Link>
       </View>

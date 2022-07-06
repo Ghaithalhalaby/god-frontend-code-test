@@ -32,8 +32,7 @@ export const DotPositionIndicator: React.FC<Props> = ({
   }
   return (
     <Flex aria-label="Carousel indicator" extend={{ flexDirection: 'row' }}>
-      {' '}
-      {dotsElements}{' '}
+      {dotsElements}
     </Flex>
   )
 }
