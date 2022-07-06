@@ -20,10 +20,12 @@ export const CarCard: React.FC<Car> = ({
     <View
       padding={1}
       extend={{
-        //backgroundColor: theme.color.ornament.divider,
         flexBasis: '25%',
         untilM: {
           flexBasis: '75%',
+        },
+        untilL: {
+          flexBasis: '33.33%',
         },
       }}
     >

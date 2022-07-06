@@ -10,6 +10,8 @@ interface Props {
 export const ProductSlider: React.FC<Props> = ({ carsList }) => {
   // State declaration
   const [isOverflown, setIsOverflown] = useState(false)
+  const [isScrolling, setIsScrolling] = useState(false)
+  const [isTouching, setIsTouching] = useState(false)
   const [index, setIndex] = useState(1)
 
   // Using VCC theme
@@ -17,23 +19,46 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
 
   // Referancing the slider element.
   const slider = useRef<HTMLUListElement>(null)
+  // Referancing stop scrolling time.
+  const scrollingTimerRef = useRef(0)
 
   useEffect(() => {
+    const isMobile = window.matchMedia('(max-width: 480px)').matches
+    if (!isScrolling && !isTouching && isMobile) {
+      snapScroll()
+    }
+  }, [isScrolling, isTouching])
+
+  useEffect(() => {
+    restScrollPostion()
+    const touchStart = () => {
+      setIsTouching(true)
+    }
+    const touchEnd = () => {
+      setIsTouching(false)
+    }
     const onScroll = () => {
       updateIndex()
+      detectStopScrolling()
     }
+
     if (slider.current) {
-      // Check if the width of the car cars exceeds the width of the slider.
       setIsOverflown(slider.current?.scrollWidth > slider.current?.clientWidth)
       slider.current.addEventListener('scroll', onScroll)
+      slider.current.addEventListener('touchstart', touchStart, {
+        passive: true,
+      })
+      slider.current.addEventListener('touchend', touchEnd, { passive: true })
     }
 
     return () => {
       if (slider.current) {
         slider.current.removeEventListener('scroll', onScroll)
+        slider.current.removeEventListener('touchstart', touchStart)
+        slider.current.removeEventListener('touchend', touchEnd)
       }
     }
-  }, [slider.current])
+  }, [carsList])
 
   /**
    * Scrolls to the next cars in the list.
@@ -90,6 +115,57 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
     setIndex(carCardIndex)
   }
 
+  /**
+   * Snaps the current car card to the center (mobile devices).
+   */
+  const snapScroll = () => {
+    if (!slider.current) return
+    slider.current.scrollTo({
+      left: calculateSnapScrolling(),
+      behavior: 'smooth',
+    })
+  }
+
+  /**
+   * Calculate snap scroll postion.
+   * @returns Snap scroll postion.
+   */
+  const calculateSnapScrolling = () => {
+    if (!slider.current) return 0
+    // Snap to the start and the end with the first and the last car card.
+    if (index === 1) return 0
+    if (index === carsList.length) return slider.current.scrollWidth
+
+    const carCardWidth = slider.current.scrollWidth / carsList.length
+    // A car card is 75% of the slider's width. To center the current card,
+    // each of the adjacent two cards should shows 12.5% of the width.
+    const scrollPostion = (index - 1) * carCardWidth - 0.125 * carCardWidth
+    return scrollPostion
+  }
+
+  /**
+   * Scrolls the slider to the first postion.
+   */
+  const restScrollPostion = () => {
+    if (!slider.current) return
+    setIndex(1)
+    slider.current.scrollTo({
+      left: 0,
+      behavior: 'auto',
+    })
+  }
+
+  /**
+   * Detects if the slider has stopped scrolling.
+   */
+  const detectStopScrolling = () => {
+    setIsScrolling(true)
+    clearTimeout(scrollingTimerRef.current)
+    scrollingTimerRef.current = window.setTimeout(() => {
+      setIsScrolling(false)
+    }, 100)
+  }
+
   return (
     <View>
       <View
@@ -131,19 +207,15 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
         direction="row"
         justifyContent="flex-end"
         spacing={1}
-        display={{ default: 'none', fromM: 'flex' }}
+        display={isOverflown ? { default: 'none', fromM: 'flex' } : 'none'}
       >
-        <Click
-          onClick={scrollPrevious}
-          disabled={!isOverflown}
-          aria-label="previuos"
-        >
+        <Click onClick={scrollPrevious} aria-label="previuos">
           <Icon
             type="mediacircled-previous-40"
             color={isOverflown ? 'primary' : 'secondary'}
           />
         </Click>
-        <Click onClick={scrollNext} disabled={!isOverflown} aria-label="next">
+        <Click onClick={scrollNext} aria-label="next">
           <Icon
             type="mediacircled-next-40"
             color={isOverflown ? 'primary' : 'secondary'}
