@@ -11,7 +11,7 @@ export const CarCard: React.FC<Props> = ({
   modelName,
   modelType,
   imageUrl,
-  cardIndex = 0,
+  cardIndex,
 }) => {
   const theme = useTheme()
 
@@ -29,7 +29,7 @@ export const CarCard: React.FC<Props> = ({
         untilL: {
           flexBasis: '33.33%',
         },
-        animationDelay: `${cardIndex * 100}ms`,
+        animationDelay: `${(cardIndex || 0) * 100}ms`,
       }}
     >
       <Text

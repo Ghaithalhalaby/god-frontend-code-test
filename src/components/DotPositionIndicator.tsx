@@ -19,14 +19,15 @@ export const DotPositionIndicator: React.FC<Props> = ({
         : theme.color.ornament.border
 
     dotsElements.push(
-      <svg height="0.8rem" width="0.8rem" style={{ padding: '0.2rem' }} key={i}>
-        <circle
-          cx="0.4rem"
-          cy="0.4rem"
-          r="0.3rem"
-          strokeWidth="0"
-          fill={dotColor}
-        />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="10"
+        height="10"
+        viewBox="0 0 10 10"
+        style={{ padding: '0.2rem' }}
+        key={i}
+      >
+        <circle fill={dotColor} cx="5" cy="5" r="4" />
       </svg>
     )
   }

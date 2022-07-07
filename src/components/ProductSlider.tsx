@@ -9,13 +9,13 @@ interface Props {
 }
 
 export const ProductSlider: React.FC<Props> = ({ carsList }) => {
-  // State declaration
+  // State declaration.
   const [isOverflown, setIsOverflown] = useState(false)
   const [isScrolling, setIsScrolling] = useState(false)
   const [isTouching, setIsTouching] = useState(false)
   const [index, setIndex] = useState(1)
 
-  // Using VCC theme
+  // Using theme provider.
   const theme = useTheme()
 
   // Referancing the slider element.
@@ -31,18 +31,9 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
   }, [isScrolling, isTouching])
 
   useEffect(() => {
+    // Reset the slider to the first postion.
     restScrollPostion()
-    const touchStart = () => {
-      setIsTouching(true)
-    }
-    const touchEnd = () => {
-      setIsTouching(false)
-    }
-    const onScroll = () => {
-      updateIndex()
-      detectStopScrolling()
-    }
-
+    // Adding event listeners
     if (slider.current) {
       setIsOverflown(slider.current?.scrollWidth > slider.current?.clientWidth)
       slider.current.addEventListener('scroll', onScroll)
@@ -51,7 +42,7 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
       })
       slider.current.addEventListener('touchend', touchEnd, { passive: true })
     }
-
+    // Cleaning event listeners
     return () => {
       if (slider.current) {
         slider.current.removeEventListener('scroll', onScroll)
@@ -165,6 +156,28 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
     scrollingTimerRef.current = window.setTimeout(() => {
       setIsScrolling(false)
     }, 100)
+  }
+
+  /**
+   * Indicates that touching has started.
+   */
+  const touchStart = () => {
+    setIsTouching(true)
+  }
+
+  /**
+   * Indicates that touching has ended.
+   */
+  const touchEnd = () => {
+    setIsTouching(false)
+  }
+
+  /**
+   * On scroll handler.
+   */
+  const onScroll = () => {
+    updateIndex()
+    detectStopScrolling()
   }
 
   return (

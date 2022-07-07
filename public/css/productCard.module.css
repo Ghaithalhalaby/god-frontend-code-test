@@ -7,11 +7,11 @@
 
 @keyframes fadein {
   from {
-    transform: translateX(25px);
+    transform: translateY(22px);
     opacity: 0;
   }
   to {
-    transform: translateX(0px);
+    transform: translateY(0px);
     opacity: 1;
   }
 }

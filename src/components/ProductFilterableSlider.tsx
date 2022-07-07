@@ -5,6 +5,7 @@ import { ProductSlider } from './ProductSlider'
 import { Car } from '../utils/types'
 
 export const ProductFilterableSlider: React.FC = () => {
+  // State declaration.
   const [carsList, setCarsList] = useState<Car[]>([])
   const [filtieredCarsList, setFiltieredCarsList] = useState<Car[]>([])
   const [setectedBodyType, setSetectedBodyType] = useState('all')
@@ -56,7 +57,7 @@ export const ProductFilterableSlider: React.FC = () => {
     setFiltieredCarsList(filtieredList)
   }
 
-  // When the data is fetching, show a loading indicator.
+  // When fetching data, show a loading indicator.
   if (isLoading) {
     return (
       <View
@@ -70,7 +71,7 @@ export const ProductFilterableSlider: React.FC = () => {
     )
   }
 
-  // Inform the user if the is an error.
+  // Inform the user if there is an error.
   if (fetchError) {
     return (
       <View width="100%" justifyContent="center" alignItems="center">
