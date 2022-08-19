@@ -1,19 +1,19 @@
 import { useRef, useEffect, useState } from 'react'
 import { View, useTheme, Icon, Click } from 'vcc-ui'
-import { CarCard } from './CarCard'
 import { Car } from '../utils/types'
-import { DotPositionIndicator } from './DotPositionIndicator'
+import CarCard from './CarCard'
+import DotPositionIndicator from './DotPositionIndicator'
 
 interface Props {
   carsList: Car[]
 }
 
-export const ProductSlider: React.FC<Props> = ({ carsList }) => {
+const ProductSlider: React.FC<Props> = ({ carsList }) => {
   // State declaration.
   const [isOverflown, setIsOverflown] = useState(false)
   const [isScrolling, setIsScrolling] = useState(false)
   const [isTouching, setIsTouching] = useState(false)
-  const [index, setIndex] = useState(1)
+  const [index, setIndex] = useState(0)
 
   // Using theme provider.
   const theme = useTheme()
@@ -102,8 +102,7 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
   const updateIndex = () => {
     if (!slider.current) return
     const carCardWidth = slider.current.scrollWidth / carsList.length
-    const carCardIndex =
-      Math.round(slider.current.scrollLeft / carCardWidth) + 1
+    const carCardIndex = Math.round(slider.current.scrollLeft / carCardWidth)
     setIndex(carCardIndex)
   }
 
@@ -125,13 +124,13 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
   const calculateSnapScrolling = () => {
     if (!slider.current) return 0
     // Snap to the start and the end with the first and the last car card.
-    if (index === 1) return 0
+    if (index === 0) return 0
     if (index === carsList.length) return slider.current.scrollWidth
 
     const carCardWidth = slider.current.scrollWidth / carsList.length
     // A car card is 75% of the slider's width. To center the current card,
-    // each of the adjacent two cards should shows 12.5% of the width.
-    const scrollPostion = (index - 1) * carCardWidth - 0.125 * carCardWidth
+    // each of the adjacent two cards should show 12.5% of the width.
+    const scrollPostion = index * carCardWidth - 0.125 * carCardWidth
     return scrollPostion
   }
 
@@ -140,7 +139,7 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
    */
   const restScrollPostion = () => {
     if (!slider.current) return
-    setIndex(1)
+    setIndex(0)
     slider.current.scrollTo({
       left: 0,
       behavior: 'auto',
@@ -240,3 +239,5 @@ export const ProductSlider: React.FC<Props> = ({ carsList }) => {
     </View>
   )
 }
+
+export default ProductSlider

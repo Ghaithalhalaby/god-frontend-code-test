@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useFetch } from '../custom-hooks/useFetch'
 import { TabNav, TabNavItem, Spinner, Text, View } from 'vcc-ui'
-import { ProductSlider } from './ProductSlider'
 import { Car } from '../utils/types'
+import useFetch from '../custom-hooks/useFetch'
+import ProductSlider from './ProductSlider'
 
-export const ProductFilterableSlider: React.FC = () => {
+const ProductFilterableSlider: React.FC = () => {
   // State declaration.
   const [carsList, setCarsList] = useState<Car[]>([])
   const [filtieredCarsList, setFiltieredCarsList] = useState<Car[]>([])
@@ -36,7 +36,10 @@ export const ProductFilterableSlider: React.FC = () => {
   const getBodyTypes = (carsList: Car[]) => {
     const bodyTypes: string[] = []
     carsList?.forEach((car: Car) => {
-      if (!bodyTypes.includes(car.bodyType)) {
+      const isContained = bodyTypes.some(
+        (bodyType) => bodyType.toLowerCase() === car.bodyType.toLowerCase()
+      )
+      if (!isContained) {
         bodyTypes.push(car.bodyType)
       }
     })
@@ -108,3 +111,5 @@ export const ProductFilterableSlider: React.FC = () => {
     </section>
   )
 }
+
+export default ProductFilterableSlider

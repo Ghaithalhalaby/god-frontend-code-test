@@ -6,7 +6,7 @@ interface Props extends Car {
   cardIndex?: number
 }
 
-export const CarCard: React.FC<Props> = ({
+const CarCard: React.FC<Props> = ({
   bodyType,
   modelName,
   modelType,
@@ -85,3 +85,5 @@ export const CarCard: React.FC<Props> = ({
     </View>
   )
 }
+
+export default CarCard

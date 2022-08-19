@@ -5,14 +5,14 @@ interface Props {
   activeDot: number
 }
 
-export const DotPositionIndicator: React.FC<Props> = ({
+const DotPositionIndicator: React.FC<Props> = ({
   numberOfDots = 0,
   activeDot = 0,
 }) => {
   const theme = useTheme()
   let dotsElements = []
 
-  for (let i = 1; i < numberOfDots + 1; i++) {
+  for (let i = 0; i < numberOfDots; i++) {
     const dotColor =
       i === activeDot
         ? theme.color.foreground.primary
@@ -37,3 +37,5 @@ export const DotPositionIndicator: React.FC<Props> = ({
     </Flex>
   )
 }
+
+export default DotPositionIndicator

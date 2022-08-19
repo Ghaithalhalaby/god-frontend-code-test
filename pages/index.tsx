@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { ProductFilterableSlider } from '../src/components/ProductFilterableSlider'
+import ProductFilterableSlider from '../src/components/ProductFilterableSlider'
 
 const Home: NextPage = () => {
   return (
